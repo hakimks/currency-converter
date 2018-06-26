@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
+
+    <!-- custom css -->
+    <link rel="stylesheet" href="/css/style.css">
+
+    <title>Currency Converter</title>
+  </head>
+  <body>
+    <div class="container">
+      <div class="row">
+        <div class="upper">
+            <h1>Currency Converter</h1>
+            <p>Check out the value of your currency when converted to another at the REAL exchange rate.</p>
+            <hr class="my-4">
+          </div>
+      </div>
+      <div class="row">
+        <div class="col">
+            <form id="currency-form">
+                <div class="form-group">
+                  <h5>Currency I have</h5>
+                  <label for="from_amount">Amount:</label>
+                  <input type="text" class="form-control" id="from_amount" value="1">
+                  <small id="textHelp" class="form-text text-muted">Enter the amount.</small>
+                  <label for="from_currency">Currency</label>
+                  <select id="from_currency" class="form-control">
+                    
+                  </select>
+                </div>
+
+                <div class="form-group">
+                    <h5>Currency I Want</h5>
+                    <label for="to_amount">Amount:</label>
+                    <input type="text" class="form-control" id="to_amount" placeholder="pending" readonly>
+                    <small id="textHelp" class="form-text text-muted">Enter the amount.</small>
+                    <label for="to_currency">Currency</label>
+                    <select id="to_currency" class="form-control">
+                      
+                    </select>
+                  </div>
+                
+                <button type="submit" class="btn btn-primary">Convert</button>
+              </form>
+        </div>
+        <div class="col"></div>
+          
+
+      </div>
+
+    </div>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="node_modules/jquery/dist/jquery.min.js" ></script>
+    <script src="node_modules/popper.js/dist/popper.min.js" ></script>
+    <script src="node_modules/bootstrap/dist/js/bootstrap.min.js" ></script>
+    <script src="js/script.js"></script>
+  </body>
+</html>
