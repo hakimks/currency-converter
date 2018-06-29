@@ -89,7 +89,7 @@ form_element.addEventListener('submit', event => {
 
 // sw registration
 if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('js/sw/main.js')
+    navigator.serviceWorker.register('main.js')
     .then(function(registration) {
       console.log('Registration successful, scope is:', registration.scope);
     })
