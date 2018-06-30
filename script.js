@@ -1,3 +1,20 @@
+
+
+function openDatabase() {
+    // If the browser doesn't support service worker, we don't care about having a database
+    if (!navigator.serviceWorker) {
+      return Promise.resolve();
+    }
+  
+    return idb.open('kimconvert', 1, function(upgradeDb) {
+      var store = upgradeDb.createObjectStore('currency', {
+        keyPath: 'id'
+      });
+    });
+  }
+
+  let dbPromise = openDatabase();
+
 // sw registration
 if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('sw.js').then(function(reg) {
@@ -106,3 +123,4 @@ form_element.addEventListener('submit', event => {
     })
 });
 
+// Index Db transactions

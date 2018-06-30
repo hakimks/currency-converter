@@ -1,7 +1,8 @@
-const Mycache = 'kim-currency-conv-v1';
+const kimCache = 'kim-currency-conv';
 
-var filesToCache = [
-    '.',
+let filesToCache = [
+    'sw.js',
+    'node_modules/idb/lib/idb.js',
     'script.js',
     'node_modules/bootstrap/dist/css/bootstrap.min.css',
     'css/style.css',
@@ -14,7 +15,7 @@ var filesToCache = [
 
 self.addEventListener('install', event => {
     event.waitUntil(
-        caches.open(Mycache).then( cache => {
+        caches.open(kimCache).then( cache => {
             return cache.addAll(filesToCache);
         })
     );
@@ -41,7 +42,7 @@ self.addEventListener('install', event => {
       caches.match(event.request).then(response => {
         return response || fetch(event.request);
       }).catch(()=> {
-        return caches.match('/currency_converter/index.html');
+        return caches.match('index.html');
       })
     );
   });
