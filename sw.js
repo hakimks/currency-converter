@@ -2,16 +2,13 @@ const Mycache = 'kim-currency-conv-v1';
 
 var filesToCache = [
     '.',
-    '/currency_converter/script.js',
-    '/currency_converter/node_modules/bootstrap/dist/css/bootstrap.min.css',
-    '/currency_converter/css/style.css',
-    '/currency_converter/node_modules/jquery/dist/jquery.min.js',
-    '/currency_converter/node_modules/popper.js/dist/popper.min.js',
-    '/currency_converter/node_modules/bootstrap/dist/js/bootstrap.min.js',
-    '/currency_converter/index.html'
-
-    
-  
+    'script.js',
+    'node_modules/bootstrap/dist/css/bootstrap.min.css',
+    'css/style.css',
+    'node_modules/jquery/dist/jquery.min.js',
+    'node_modules/popper.js/dist/popper.min.js',
+    'node_modules/bootstrap/dist/js/bootstrap.min.js',
+    'index.html'
   ];
   
 

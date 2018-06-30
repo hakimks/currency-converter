@@ -1,3 +1,22 @@
+// sw registration
+if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('sw.js').then(function(reg) {
+  
+      if(reg.installing) {
+        console.log('Service worker installing');
+      } else if(reg.waiting) {
+        console.log('Service worker installed');
+      } else if(reg.active) {
+        console.log('Service worker active');
+      }
+  
+    }).catch(function(error) {
+      // registration failed
+      console.log('Registration failed with ' + error);
+    });
+  }
+  
+
 // get all currencies available
 fetch('https://free.currencyconverterapi.com/api/v5/currencies')
     .then(response=> {
@@ -87,14 +106,3 @@ form_element.addEventListener('submit', event => {
     })
 });
 
-// sw registration
-if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('main.js')
-    .then(function(registration) {
-      console.log('Registration successful, scope is:', registration.scope);
-    })
-    .catch(function(error) {
-      console.log('Service worker registration failed, error:', error);
-    });
-  }
-  
