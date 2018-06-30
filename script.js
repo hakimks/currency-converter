@@ -7,9 +7,7 @@ function openDatabase() {
     }
   
     return idb.open('kimconvert', 1, function(upgradeDb) {
-      var store = upgradeDb.createObjectStore('currency', {
-        keyPath: 'id'
-      });
+      var store = upgradeDb.createObjectStore('currency', {keyPath: "id"});
     });
   }
 
@@ -81,7 +79,16 @@ fetch('https://free.currencyconverterapi.com/api/v5/currencies')
 
             
         }
-        
+        // add this to the indexedBD the currency object store
+        dbPromise.then(db => {
+            let tx = db.transaction('currency', 'readwrite');
+            let store = tx.objectStore('currency');
+            for (const curr of currencyMap) {
+                let[id, name] = curr;
+                let obj = {id, name};
+                store.put(obj);        
+            }
+        })
 
         
     })
@@ -123,4 +130,18 @@ form_element.addEventListener('submit', event => {
     })
 });
 
-// Index Db transactions
+// Index Db transactions , add currency id and name 
+// dbPromise.then((db) => {
+//     const val = 'hey!'
+//     const key = 'Hello again'
+  
+//     const tx = db.transaction('store1', 'readwrite')
+//     tx.objectStore('store1').put(val, key)
+//     return tx.complete
+//   })
+//   .then(() => {
+//     console.log('Transaction complete')
+//   })
+//   .catch(() => {
+//     console.log('Transaction failed')
+//   })
