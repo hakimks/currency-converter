@@ -1,5 +1,5 @@
-
-
+// script to register the service worker, create the database , store currencies and rates in the
+// database
 function openDatabase() {
     // If the browser doesn't support service worker, we don't care about having a database
     if (!navigator.serviceWorker) {
@@ -34,8 +34,8 @@ if ('serviceWorker' in navigator) {
   
 
 // get all currencies available
-// first check db and then get from nextwork
-// fetchCurrency();
+// first check db and then get from nextwork and store them in database
+
 getCurrencies();
 fetchCurrency();
 
@@ -126,8 +126,7 @@ function fetchCurrency(){
 
 // submit request
 // https://free.currencyconverterapi.com/api/v5/convert?q=USD_PHP
-// url = 
-// fetch()
+
 function submitQuery(fromField, toField){
     urlQuery =  'https://free.currencyconverterapi.com/api/v5/convert?q='
     this.fromField = fromField;
@@ -142,7 +141,7 @@ function submitQuery(fromField, toField){
     .then(response =>{
         return response.json();
     }).then(data => {
-        // if no data, check database
+        // if no data, return
         if(!data){
             
             return;
@@ -225,18 +224,3 @@ function getRateFromDatabase(tofromPart) {
     return theRate;
 }
 
-// Index Db transactions , add currency id and name 
-// dbPromise.then((db) => {
-//     const val = 'hey!'
-//     const key = 'Hello again'
-  
-//     const tx = db.transaction('store1', 'readwrite')
-//     tx.objectStore('store1').put(val, key)
-//     return tx.complete
-//   })
-//   .then(() => {
-//     console.log('Transaction complete')
-//   })
-//   .catch(() => {
-//     console.log('Transaction failed')
-//   })
