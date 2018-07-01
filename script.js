@@ -35,11 +35,11 @@ if ('serviceWorker' in navigator) {
 
 // get all currencies available
 // first check db and then get from nextwork
+// fetchCurrency();
+getCurrencies();
 fetchCurrency();
-// getCurrencies();
 
 function getCurrencies(){
-    if (dbPromise){
         dbPromise.then(db => {
             let tx = db.transaction('currency', 'readwrite');
             let store = tx.objectStore('currency');
@@ -58,7 +58,7 @@ function getCurrencies(){
     
             cusr.continue().then(readCusrsor);
         })
-    }
+    
 }
 
 
@@ -69,7 +69,6 @@ function fetchCurrency(){
     }).then(data =>{
         // if no data, get currencies from database
         if(!data){
-            getCurrencies();
             return;
         }
     //   console.log(data);
@@ -119,9 +118,9 @@ function fetchCurrency(){
             }
         }) 
     })
-    .catch(err => {
-        console.log("There was an error .", err);
-    })
+    // .catch(err => {
+    //     console.log("There was an error .", err);
+    // })
 
 }
 
@@ -135,6 +134,8 @@ function submitQuery(fromField, toField){
     this.toField = toField;
     let tofromPart = fromField+'_'+toField;
     queryString = urlQuery + tofromPart;
+    console.log(queryString);
+    
 
     //   console.log(queryString);
     fetch(queryString)
@@ -143,10 +144,8 @@ function submitQuery(fromField, toField){
     }).then(data => {
         // if no data, check database
         if(!data){
-            let rate = 0;
-            getRateFromDatabase(tofromPart);
-
-            return rate;
+            
+            return;
         }
         // console.log(data);
         const qResults = Object.entries(data.results);
@@ -169,25 +168,34 @@ function submitQuery(fromField, toField){
         return rate;
         
     }).then(rate => {
-        if(rate ===0) {
-            document.getElementById('to_amount').value = "Need Internet";
-            return;
-        }
         let amountField = document.getElementById('from_amount').value;
         let convertedValue = rate * amountField;
         document.getElementById('to_amount').value = convertedValue;
         
 
     }).catch(()=>{
-        document.getElementById('to_amount').value = "Need Internet";
+        let rateDB = getRateFromDatabase(tofromPart);
+        console.log(`${rateDB} is value from database`);
+        
+        if(rateDB === 0){
+            document.getElementById('to_amount').value = "Need Internet";
+            return;
+        }
+        let amountFieldDb = document.getElementById('from_amount').value;
+        let convertedValueDb = rateDB * amountFieldDb;
+        document.getElementById('to_amount').value = convertedValueDb;
+
     })
 }
 
+//code to handle  pressing the submit button
 const form_element = document.getElementById('currency-form');
 form_element.addEventListener('submit', event => {
   event.preventDefault();
   let fromField = document.getElementById('from_currency').value;
   let toField = document.getElementById('to_currency').value;
+  console.log(`${fromField} and ${toField}`);
+  
 
   submitQuery(fromField, toField);
    
@@ -198,16 +206,23 @@ form_element.addEventListener('submit', event => {
 
 function getRateFromDatabase(tofromPart) {
     this.tofromPart = tofromPart;
+    let theRate = 0;
     dbPromise.then(db => {
         let tx = db.transaction('rate', 'readwrite');
         let store = tx.objectStore('rate');
-        return store.getAll(tofromPart);
+        return store.get(tofromPart);
     }).then(obj => {
         if(!obj){
+            console.log("Nothig got from db");
+            
             return 0;
         }
-        return obj.rate;
+        console.log(obj.rate);
+        
+        theRate =  obj.rate;
     })
+
+    return theRate;
 }
 
 // Index Db transactions , add currency id and name 
